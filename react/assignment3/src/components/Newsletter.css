@@ -1,0 +1,35 @@
+.newsletter{
+  padding:10%;
+  display:flex;
+  justify-content:space-between;
+  gap:40px;
+  background-color: white;
+  line-height: 1.8;
+}
+
+.newsletter-form{
+  margin-top:20px;
+  display:flex;
+  gap:10px;
+}
+
+a{
+  
+  font-size: large;
+  color: grey;
+}
+
+.newsletter-form input{
+  padding:12px;
+  width:250px;
+  border-radius: 10px;
+  background-color: rgba(128, 128, 128, 0.124);
+  border-style: none;
+  font-size: large;
+}
+
+@media(max-width:768px){
+.newsletter{
+flex-direction:column;
+}
+}

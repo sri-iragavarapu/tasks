@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Management Dashboard</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; padding: 25px; background: #f4f7f6; color: #333; transition: background 0.3s, color 0.3s; }
+        body.dark-mode { background: #121212; color: #e0e0e0; }
+        body.dark-mode .metric-card, body.dark-mode .roster-item, body.dark-mode .inspector-panel { background: #1e1e1e; border-color: #333; color: #e0e0e0; }
+        
+        /* Centered Unified Header Layout Structure */
+        .top-navbar { display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #0056b3; padding-bottom: 15px; margin-bottom: 25px; }
+        .header-left { flex: 1; text-align: left; }
+        .header-center { flex: 1; text-align: center; } /* Keeps Take Attendance perfectly centered */
+        .header-right { flex: 1; text-align: right; display: flex; justify-content: flex-end; gap: 10px; }
+
+        .mode-toggle { padding: 10px 16px; cursor: pointer; font-weight: bold; border-radius: 20px; border: 1px solid #0056b3; background: transparent; color: #0056b3; }
+        body.dark-mode .mode-toggle { color: #ffc107; border-color: #ffc107; }
+        .exit-btn { background: #dc3545; color: white; border: none; padding: 10px 18px; cursor: pointer; border-radius: 6px; font-weight: bold; }
+        .action-link { background: #28a745; color: white; padding: 10px 18px; text-decoration: none; font-weight: bold; border-radius: 6px; display: inline-block; }
+        .action-link:hover { background: #218838; }
+
+        .metrics-bar { display: flex; gap: 15px; margin-bottom: 25px; }
+        .metric-card { flex: 1; border: 1px solid #b3d1ff; padding: 15px; text-align: center; border-radius: 8px; font-weight: bold; background: #ffffff; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        
+        .roster-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; margin-top: 15px; margin-bottom: 30px; }
+        .roster-item { border: 1px solid #ccc; padding: 15px; text-align: left; border-radius: 6px; background: #ffffff; box-shadow: 0 2px 4px rgba(0,0,0,0.05); color: #333; }
+        .roster-item.present { border-left: 5px solid #28a745; background: #e8f5e9; }
+        .roster-item.absent { border-left: 5px solid #dc3545; background: #ffebee; }
+        
+        .btn-group { margin-top: 10px; }
+        .btn-status { width: 100%; padding: 8px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; background: #17a2b8; color: white; }
+        .btn-status:hover { background: #138496; }
+        
+        /* Details box styling updated to standard solid border look to match the student blocks */
+        .inspector-panel { border: 1px solid #ccc; padding: 20px; background: #ffffff; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); max-width: 500px; margin-top: 20px; color: #333; }
+        .inspector-panel h3 { margin-top: 0; color: #0056b3; border-bottom: 1px solid #eee; padding-bottom: 8px; }
+        body.dark-mode .inspector-panel h3 { color: #ffc107; border-color: #333; }
+        .detail-item { padding: 6px 0; border-bottom: 1px solid #eee; }
+        body.dark-mode .detail-item { border-color: #333; }
+    </style>
+</head>
+<body>
+    <div>
+        <div class="top-navbar">
+            <!-- Left Side: Greeting Heading -->
+            <div class="header-left">
+                <h1 style="margin: 0; font-size: 24px;">Welcome, <span id="userWelcome"></span></h1>
+            </div>
+            
+            <!-- Center Column Element: Dynamic Attendance Button Link -->
+            <div class="header-center">
+                <a href="attendance.html" class="action-link">Take Attendance ➔</a>
+            </div>
+            
+            <!-- Right Hand Utility Panel elements -->
+            <div class="header-right">
+                <button class="mode-toggle" onclick="toggleViewTheme()">🌓 Theme</button>
+                <button class="exit-btn" onclick="triggerExit()">Logout</button>
+            </div>
+        </div>
+        
+        <div class="metrics-bar">
+            <div class="metric-card" style="border-top: 4px solid #0056b3;">Enrolled <br><span id="totalStudents" style="font-size: 20px;">0</span></div>
+            <div class="metric-card" style="border-top: 4px solid #28a745;">Present <br><span id="presentCount" style="font-size: 20px; color: #28a745;">0</span></div>
+            <div class="metric-card" style="border-top: 4px solid #dc3545;">Absent <br><span id="absentCount" style="font-size: 20px; color: #dc3545;">0</span></div>
+        </div>
+        
+        <!-- Renamed Header Section Title -->
+        <h2>Students</h2>
+        <div class="roster-grid" id="studentGrid"></div>
+
+        <!-- Solid-bordered lower details visualization dock -->
+        <div class="inspector-panel">
+            <h3>Details of Students</h3>
+            <div id="dynamicDetails"><em>Tap a "View Details" button above to inspect a student records file here.</em></div>
+        </div>
+    </div>
+
+    <script>
+        let students = [];
+
+        const activeStaff = localStorage.getItem('loggedInUser');
+        if (!activeStaff) window.location.href = 'login.html';
+        document.getElementById('userWelcome').textContent = activeStaff;
+
+        if(localStorage.getItem('theme') === 'dark') document.body.classList.add('dark-mode');
+
+        function toggleViewTheme() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+        }
+
+        fetch('students.json')
+            .then(response => {
+                if (!response.ok) throw new Error('Data transmission error');
+                return response.json();
+            })
+            .then(data => {
+                const cache = localStorage.getItem('studentData');
+                students = cache ? JSON.parse(cache) : data;
+                if (!cache) localStorage.setItem('studentData', JSON.stringify(students));
+                generateInterface();
+            })
+            .catch(err => {
+                console.error(err);
+                alert('Error loading profile roster data');
+            });
+
+        function generateInterface() {
+            const total = students.length;
+            const present = students.filter(s => s.status === 'present').length;
+            const absent = total - present;
+
+            document.getElementById('totalStudents').textContent = total;
+            document.getElementById('presentCount').textContent = present;
+            document.getElementById('absentCount').textContent = absent;
+
+            const grid = document.getElementById('studentGrid');
+            grid.innerHTML = '';
+            students.forEach(student => {
+                const cell = document.createElement('div');
+                cell.className = `roster-item ${student.status}`;
+                cell.innerHTML = `
+                    <h3>${student.name}</h3>
+                    <p style="margin:4px 0;">Roll No: ${student.roll}</p>
+                    <p style="margin:4px 0;">Status: <strong>${student.status}</strong></p>
+                    <div class="btn-group">
+                        <button class="btn-status" onclick="renderProfileCard(${student.id})">View Details</button>
+                    </div>
+                `;
+                grid.appendChild(cell);
+            });
+        }
+
+        function renderProfileCard(id) {
+            const student = students.find(s => s.id === id);
+            if (student) {
+                document.getElementById('dynamicDetails').innerHTML = `
+                    <div class="detail-item"><strong>Name:</strong> ${student.name}</div>
+                    <div class="detail-item"><strong>Roll Number:</strong> ${student.roll}</div>
+                    <div class="detail-item"><strong>ID Number:</strong> ${student.id}</div>
+                    <div class="detail-item"><strong>Phone Contact:</strong> ${student.phone}</div>
+                    <div class="detail-item"><strong>Email Address:</strong> ${student.email}</div>
+                    <div class="detail-item"><strong>Current Status:</strong> <span style="text-transform: uppercase; font-weight:bold;">${student.status}</span></div>
+                `;
+            }
+        }
+
+        function triggerExit() {
+            localStorage.removeItem("loggedInUser");
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>

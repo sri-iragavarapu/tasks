@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Attendance Registration</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; padding: 25px; background: #ebf3f9; }
+        .sheet-box { max-width: 450px; margin: 50px auto; background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-top: 5px solid #0056b3; }
+        .student-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid #e1e8ed; }
+        .return-btn { background: #0056b3; color: #fff; padding: 10px 16px; text-decoration: none; font-weight: bold; border-radius: 6px; display: inline-block; margin-bottom: 20px; border: none; cursor: pointer; }
+        .return-btn:hover { background: #004085; }
+        select { padding: 8px; font-weight: bold; border-radius: 4px; border: 1px solid #ccc; outline: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="sheet-box">
+        <a href="dashboard1.html" class="return-btn">← Save Changes</a>
+        <h2 style="margin: 0 0 15px 0; color: #0056b3;">Attendance Register</h2>
+        <hr style="border: 0; border-top: 1px solid #ccc; margin-bottom: 15px;">
+        <div id="sheetList"></div>
+    </div>
+
+    <script>
+        const backupStudents = [
+          { "id": 1, "name": "Alex Johnson", "roll": "CS001", "phone": "9876543210", "email": "alex@mail.com", "status": "present" },
+          { "id": 2, "name": "Sam Wilson", "roll": "CS002", "phone": "9876543211", "email": "sam@mail.com", "status": "absent" },
+          { "id": 3, "name": "Jordan Lee", "roll": "CS003", "phone": "9876543212", "email": "jordan@mail.com", "status": "present" },
+          { "id": 4, "name": "Casey Smith", "roll": "CS004", "phone": "9876543213", "email": "casey@mail.com", "status": "present" },
+          { "id": 5, "name": "Taylor Brown", "roll": "CS005", "phone": "9876543214", "email": "taylor@mail.com", "status": "absent" }
+        ];
+
+        let students = localStorage.getItem('studentData') ? JSON.parse(localStorage.getItem('studentData')) : backupStudents;
+        
+        if (!localStorage.getItem('studentData')) {
+            localStorage.setItem('studentData', JSON.stringify(students));
+        }
+
+        function buildRegister() {
+            const listContainer = document.getElementById('sheetList');
+            listContainer.innerHTML = '';
+            
+            students.forEach(student => {
+                const elementRow = document.createElement('div');
+                elementRow.className = 'student-row';
+                elementRow.innerHTML = `
+                    <span><strong>${student.name}</strong> (Roll: ${student.roll})</span>
+                    <select onchange="modifyRegistry(${student.id}, this.value)">
+                        <option value="present" ${student.status === 'present' ? 'selected' : ''}>Present ✔</option>
+                        <option value="absent" ${student.status === 'absent' ? 'selected' : ''}>Absent ❌</option>
+                    </select>
+                `;
+                listContainer.appendChild(elementRow);
+            });
+        }
+
+        function modifyRegistry(id, targetState) {
+            students = students.map(s => s.id === id ? { ...s, status: targetState } : s);
+            localStorage.setItem('studentData', JSON.stringify(students));
+        }
+
+        buildRegister();
+    </script>
+</body>
+</html>

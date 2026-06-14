@@ -1,0 +1,108 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body, html {
+    height: 100%;
+    overflow: hidden; /* No scrolling */
+}
+
+.hero {
+    height: 100vh;
+    width: 100vw;
+    /* DARK VIBE: Replace 'bg.jpg' with your background image name */
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                url('assets/laptop.jpg') center/cover no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+/* NAVBAR AT THE TOP */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    width: 100%; 
+    position: absolute;
+    top:0;
+    left:0;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.main-logo {
+    height: 40px; /* Adjust this to change logo size */
+    width: auto;
+}
+
+.logo-text {
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    gap: 25px;
+}
+
+/* CENTER TEXT & BUTTONS */
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+h1 {
+    font-size: clamp(2.5rem, 8vw, 4.5rem); /* Responsive text size */
+    margin-bottom: 30px;
+    font-weight: 800;
+   
+}
+
+/* BUTTON STYLES */
+button {
+    padding: 15px 35px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.btn-green { background: #2ecc71; color: white; margin-right: 15px; }
+.btn-white { background: white; color: black; }
+.buy-btn-top { background: #e91e63; color: white; padding: 10px 20px; }
+
+/* This only turns on when the screen is smaller than 600px */
+@media (max-width: 600px) {
+    .navbar {
+        flex-direction: column; /* Stacks logo and links vertically */
+        gap: 10px;
+        padding: 10px;
+    }
+    
+    .nav-links {
+        flex-direction: row; /* Keeps links side-by-side but smaller */
+        font-size: 12px;
+        gap: 10px;
+    }
+
+    h1 {
+        font-size: 30px; /* Makes the big text smaller for phones */
+    }
+}

@@ -1,0 +1,7 @@
+[
+  { "id": 1, "name": "Alex Johnson", "roll": "CS001", "phone": "9876543210", "email": "alex@mail.com", "status": "present" },
+  { "id": 2, "name": "Sam Wilson", "roll": "CS002", "phone": "9876543211", "email": "sam@mail.com", "status": "absent" },
+  { "id": 3, "name": "Jordan Lee", "roll": "CS003", "phone": "9876543212", "email": "jordan@mail.com", "status": "present" },
+  { "id": 4, "name": "Casey Smith", "roll": "CS004", "phone": "9876543213", "email": "casey@mail.com", "status": "present" },
+  { "id": 5, "name": "Taylor Brown", "roll": "CS005", "phone": "9876543214", "email": "taylor@mail.com", "status": "absent" }
+]

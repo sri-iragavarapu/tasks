@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Management Application</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="container">
+    <h1> Expense Tracker Dashboard </h1>
+    <!--Summary Cards-->
+    <div class = "summary"> 
+        <div class ="card"> <h3> Total Expense</h3> <p id="totalExpense">0</p> </div>
+        <div class = "card"> <h3> Total Transactions</h3> <p id="totalTransactions">0</p> </div>
+        <div class = "card"> <h3> Highest Expense</h3> <p id="highestExpense">0</p></div>
+    </div>
+</div>
+    <!-- Form -->
+    <div class ="formContainer">
+        <input type ="text" id="title" placeholder="Expense Title">
+        <select id="category">
+            <option value="Food">Food</option>
+            <option value="Travel">Travel</option>
+            <option value="Shopping">Shopping</option>
+            <option value="Bills">Bills</option>
+        </select>
+        <input type="number" id="amount" placeholder="Amount">
+        <button id="addBtn">Add Expense</button>
+    </div> 
+    <!-- Filter -->
+     <div class = "filter">
+        <select id = "filterCategory">
+            <option value="All">All</option>
+            <option value="Food">Food</option>
+            <option value="Travel">Travel</option>
+            <option value="Shopping">Shopping</option>
+            <option value="Bills">Bills</option>
+        </select>
+     </div>
+     <!-- Table -->
+     <table>
+        <thead>
+            <tr>
+            <th> Title</th>
+            <th> Category</th>
+            <th> Amount</th>
+            <th> Action</th>
+            </tr>      
+        </thead>
+        <tbody id="expenseTableBody"></tbody>
+     </table>
+    <script src="script.js"></script>     
+</body>
+</html>
