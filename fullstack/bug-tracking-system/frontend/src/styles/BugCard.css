@@ -1,0 +1,21 @@
+.bug-card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 8px gray;
+}
+
+.bug-card button {
+  margin-right: 10px;
+  margin-top: 10px;
+  padding: 8px 14px;
+  border: none;
+  cursor: pointer;
+  background: #2563eb;
+  color: white;
+  border-radius: 5px;
+}
+
+.bug-card button:last-child {
+  background: #dc2626;
+}

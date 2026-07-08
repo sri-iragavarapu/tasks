@@ -1,0 +1,26 @@
+.bug-form {
+  width: 450px;
+  margin: 20px auto;
+  background: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 8px gray;
+}
+
+.bug-form input,
+.bug-form textarea,
+.bug-form select,
+.bug-form button {
+  padding: 10px;
+  font-size: 16px;
+}
+
+.bug-form button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  cursor: pointer;
+}

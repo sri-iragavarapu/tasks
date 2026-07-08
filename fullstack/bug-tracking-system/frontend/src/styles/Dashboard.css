@@ -1,0 +1,16 @@
+.dashboard {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin: 25px;
+  flex-wrap: wrap;
+}
+
+.card {
+  width: 150px;
+  background: white;
+  text-align: center;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 8px gray;
+}
