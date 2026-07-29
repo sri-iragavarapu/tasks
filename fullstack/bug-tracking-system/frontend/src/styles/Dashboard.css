@@ -14,3 +14,8 @@
   border-radius: 8px;
   box-shadow: 0 0 8px gray;
 }
+
+.card:hover {
+  transform: scale(1.05);
+  transition: 0.3s;
+}

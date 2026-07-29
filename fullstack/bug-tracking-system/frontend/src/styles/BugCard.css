@@ -1,21 +1,61 @@
 .bug-card {
   background: white;
   padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 8px gray;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  transition: 0.3s;
+}
+
+.bug-card:hover {
+  transform: translateY(-5px);
 }
 
 .bug-card button {
+  margin-top: 15px;
   margin-right: 10px;
-  margin-top: 10px;
-  padding: 8px 14px;
+  padding: 10px 15px;
   border: none;
+  border-radius: 6px;
   cursor: pointer;
-  background: #2563eb;
   color: white;
-  border-radius: 5px;
+  background: #2563eb;
 }
 
 .bug-card button:last-child {
   background: #dc2626;
+}
+
+.open {
+  color: red;
+  font-weight: bold;
+}
+
+.progress {
+  color: orange;
+  font-weight: bold;
+}
+
+.resolved {
+  color: green;
+  font-weight: bold;
+}
+
+.high {
+  color: red;
+  font-weight: bold;
+}
+
+.medium {
+  color: orange;
+  font-weight: bold;
+}
+
+.low {
+  color: green;
+  font-weight: bold;
+}
+
+.bug-card button:disabled {
+  background: gray;
+  cursor: not-allowed;
 }

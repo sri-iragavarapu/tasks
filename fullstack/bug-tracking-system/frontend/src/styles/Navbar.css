@@ -1,8 +1,9 @@
 .navbar {
-  background-color: #2563eb;
+  background: #1e40af;
   color: white;
-  text-align: center;
   padding: 18px;
+  text-align: center;
+  box-shadow: 0 2px 8px gray;
 }
 
 .navbar h1 {

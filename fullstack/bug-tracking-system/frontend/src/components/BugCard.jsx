@@ -32,39 +32,63 @@ const deleteBug = async () => {
 };
 
   return (
-    <div className="bug-card">
-      <h3>{bug.title}</h3>
+  <div className="bug-card">
+    <h2>{bug.title}</h2>
 
-      <p>
-        <strong>Description:</strong> {bug.description}
-      </p>
+    <p>{bug.description}</p>
 
-      <p>
-        <strong>Developer:</strong> {bug.developer}
-      </p>
+    <hr />
 
-      <p>
-        <strong>Priority:</strong> {bug.priority}
-      </p>
+    <p>
+      <strong>👨‍💻 Developer:</strong> {bug.developer}
+    </p>
 
-      <p>
-        <strong>Status:</strong> {bug.status}
-      </p>
+    <p>
+      <strong>🔥 Priority:</strong>{" "}
+      <span
+        className={
+          bug.priority === "High"
+            ? "high"
+            : bug.priority === "Medium"
+            ? "medium"
+            : "low"
+        }
+      >
+        {bug.priority}
+      </span>
+    </p>
 
-      <p>
-        <strong>Date:</strong> {bug.date}
-      </p>
+    <p>
+      <strong>📌 Status:</strong>{" "}
+      <span
+        className={
+          bug.status === "Open"
+            ? "open"
+            : bug.status === "In Progress"
+            ? "progress"
+            : "resolved"
+        }
+      >
+        {bug.status}
+      </span>
+    </p>
 
-       <button onClick={updateStatus}>
-  Update Status
-</button>
+    <p>
+      <strong>📅 Created:</strong> {bug.date}
+    </p>
 
-<button onClick={deleteBug}>
-  Delete
-</button>
+    <button
+      onClick={updateStatus}
+      disabled={bug.status === "Resolved"}
+    >
+      Update Status
+    </button>
 
-    </div>
-  );
+    <button onClick={deleteBug}>
+      Delete
+    </button>
+  </div>
+);
 }
 
 export default BugCard;

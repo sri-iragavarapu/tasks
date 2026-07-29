@@ -1,0 +1,26 @@
+[
+  {
+    "id": "E1784504260711",
+    "eventName": "Java Workshop",
+    "description": "Learn React",
+    "category": "Technical",
+    "venue": "Kakinada",
+    "eventDate": "2026-07-31",
+    "registrationDeadline": "2026-07-30",
+    "maxParticipants": 300,
+    "availableSeats": 298,
+    "status": "Upcoming"
+  },
+  {
+    "id": "E1784504308357",
+    "eventName": "Coding Contest",
+    "description": "Programming Competition",
+    "category": "Competition",
+    "venue": "Vijayawada",
+    "eventDate": "2026-07-31",
+    "registrationDeadline": "2026-07-31",
+    "maxParticipants": 50,
+    "availableSeats": 49,
+    "status": "Upcoming"
+  }
+]
